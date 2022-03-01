@@ -1,0 +1,5 @@
+geckodriver.log
+Grade Project.code-workspace
+.vscode
+website/avalible_classes/__pycache__
+website/website/__pycache__
