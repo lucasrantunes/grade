@@ -4,8 +4,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import sqlite3
 
-s=Service(ChromeDriverManager().install())
+s = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=s)
 
 driver.get("https://sistemas2.utfpr.edu.br/dpls/sistema/aluno01/mpListaHorario.pcExibirTurmas?p_arquivoNomeVc=6AC2773AB60FB07DF3A806157360B06A")
@@ -20,8 +21,8 @@ finally:
     password_element = driver.find_element(by=By.XPATH, value='//input[@formcontrolname="password"]')
     button_element = driver.find_element(by=By.XPATH, value='//button[@label="Login"]')
 
-    user = ""
-    password = ""
+    user = "a2302748"
+    password = "gqeefx26"
 
     user_element.click()
     user_element.send_keys(user)
@@ -37,6 +38,22 @@ finally:
         )
     finally:
         classes_table = driver.find_element(by=By.XPATH, value='//table[@border="1"]')
-        classes_table_html = classes_table.get_attribute('outerHTML')
-        
-        print(classes_table_html)
+        classes_lines = classes_table.find_elements(by=By.XPATH, value='.//tr')
+
+        #db = sqlite3.connect("classes.db")
+        #db.cursor()
+
+        for line in classes_lines:
+            line_columns = line.find_elements(by=By.XPATH, value='.//td')
+            if "semanais" in line_columns[0].text:
+                class_name = line_columns[0].text
+                #db.execute(f"INSERT INTO subject (name) VALUES ('{class_name}')")
+                print(f"INSERT INTO subject (name) VALUES ('{class_name}')")
+
+        #db.commit()
+        #db.close()
+
+        # classes_table_html = classes_table.get_attribute('outerHTML')
+        # with codecs.open("table.html", "w", "utf-8") as file:
+        #    file.write(classes_table_html)
+        # print(classes_table_html)
