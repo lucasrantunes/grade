@@ -46,13 +46,34 @@ finally:
 
         #db = sqlite3.connect("classes.db")
         #db.cursor()
-
+        class_id = 0
         for line in classes_lines:
             line_columns = line.find_elements(by=By.XPATH, value='.//td')
-            if "semanais" in line_columns[0].text:
-                class_name = line_columns[0].text
+            first_column = line_columns[0].text
+            if "semanais" in first_column:
+                class_id += 1
+                ## Remove (x Aulas semanais) from the first_column
+                nome = first_column[0:first_column.find("  ")]
+                ## Get (x Aulas semanais) and return only the integer
+                aulas_semanais = int( nome[nome.find("(")+1:nome.find(")")].replace(" Aulas semanais", "") )
                 #db.execute(f"INSERT INTO subject (name) VALUES ('{class_name}')")
-                print(f"INSERT INTO subject (name) VALUES ('{class_name}')")
+                print(f"{nome}")
+                
+            elif "Turma" in first_column:
+                pass
+            else:
+                turma = line_columns[0].text
+                planejamento = line_columns[1].text
+                enquadramento = line_columns[2].text
+                vagas_total = line_columns[3].text
+                vagas_calouros = line_columns[4].text
+                reserva = line_columns[5].text
+                prioridade_curso = line_columns[7].text
+                horario = line_columns[8].text
+                professor = line_columns[9].text
+                optativa = line_columns[10].text
+
+                print(f"{class_id}) Turma: {turma}, Horário: {horario}, Professor: {professor}")
 
         #db.commit()
         #db.close()
