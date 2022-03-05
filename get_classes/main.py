@@ -5,6 +5,13 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import sqlite3
+import configparser
+
+config = configparser.ConfigParser()
+config.read("config.ini")
+
+user = config["utfpr_login"]["user"]
+password = config["utfpr_login"]["password"]
 
 s = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=s)
@@ -20,9 +27,6 @@ finally:
     user_element = driver.find_element(by=By.XPATH, value='//input[@formcontrolname="username"]')
     password_element = driver.find_element(by=By.XPATH, value='//input[@formcontrolname="password"]')
     button_element = driver.find_element(by=By.XPATH, value='//button[@label="Login"]')
-
-    user = "a2302748"
-    password = "gqeefx26"
 
     user_element.click()
     user_element.send_keys(user)
