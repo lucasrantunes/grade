@@ -1,14 +1,20 @@
 from django.db import models
 
-class Curso(models.model):
+class Curso(models.Model):
     nome = models.CharField(max_length=200)
     code = models.IntegerField(default=0)
 
-class Disciplina(models.model):
+    def __str__(self):
+        return self.nome
+
+class Disciplina(models.Model):
     nome = models.CharField(max_length=200)
     aulas_semanais = models.IntegerField(default=0)
 
-class Turma(models.model):
+    def __str__(self):
+        return self.nome
+
+class Turma(models.Model):
     PRESENCIAL = 1
     HIBRIDA = 2
     REMOTO = 3
@@ -18,7 +24,7 @@ class Turma(models.model):
     )
 
     turma = models.CharField(max_length=5)
-    enquadramento = models.IntegerChoices(default=1, choices=tipos_enquadramento)
+    enquadramento = models.IntegerField(default=1, choices=tipos_enquadramento)
     vagas_total = models.IntegerField(default=0)
     vagas_calouros = models.IntegerField(default=0)
     reserva = models.CharField(max_length=20)
