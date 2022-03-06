@@ -3,3 +3,5 @@ Grade Project.code-workspace
 .vscode
 website/avalible_classes/__pycache__
 website/website/__pycache__
+config.ini
+__pycache__/
